@@ -1,11 +1,14 @@
 package pe.edu.idat.apprecyclerviewsimg
 
+import android.content.Context
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import pe.edu.idat.apprecyclerviewsimg.databinding.ItemAndroidBinding
 
-class AdapterAndroid(private var lstItem: List<String>) : RecyclerView.Adapter<AdapterAndroid.ViewHolder>() {
+class AdapterAndroid(val listaAndroid: List<Android>,val context: Context) : RecyclerView.Adapter<AdapterAndroid.ViewHolder>() {
 
     inner class ViewHolder(val binding: ItemAndroidBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -18,9 +21,18 @@ class AdapterAndroid(private var lstItem: List<String>) : RecyclerView.Adapter<A
         return ViewHolder(binding)
     }
 
-    override fun getItemCount(): Int = lstItem.size
+    override fun getItemCount(): Int = listaAndroid.size
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.binding.tvNumVersion.text = lstItem[position]
+        with(holder){
+            with(listaAndroid[position]){
+                binding.tvNomVersion.text = nombre
+                binding.tvNumVersion.text = version
+                binding.ivAndroid.setImageResource(img)
+                binding.cvAndroid.setOnClickListener(View.OnClickListener{
+                    Toast.makeText(context,"Click Item Android $nombre",Toast.LENGTH_LONG).show()
+                })
+            }
+        }
     }
 }
